@@ -27,3 +27,8 @@ def get_winner(computer_choice, user_choice):
             print("You won!")
         if user_choice == "Paper":
             print("You lost")
+
+def play():
+    computer_choice = get_computer_choice()
+    user_choice = get_user_choice()
+    get_winner(computer_choice, user_choice)
