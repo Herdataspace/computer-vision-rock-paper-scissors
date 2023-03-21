@@ -28,13 +28,17 @@ def get_prediction():
     cv2.destroyAllWindows()
 
     if user_choice_prediction == 0:
-        print('Rock')
+        user_choice = 'Rock'
+        print('user_choice')
     elif user_choice_prediction == 1:
-        print('Paper')
+        user_choice = 'Paper'
+        print('user_choice')
     elif user_choice_prediction == 2:
-        print('Scissors')
+        user_choice = 'Scissors'
+        print('user_choice')
     else:
-        print('Nothing')
-        
+        user_choice = 'Nothing'
+        print('user_choice')
+    return user_choice
 
 get_prediction()
