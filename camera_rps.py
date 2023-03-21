@@ -2,6 +2,7 @@ import cv2
 import random
 from keras.models import load_model
 import numpy as np
+import time
 
 def get_prediction():
     model = load_model('keras_model.h5')
@@ -93,4 +94,17 @@ def play():
     computer_choice = get_computer_choice()
     get_winner(computer_choice, user_choice)
 
-play()
+def countdown():
+    start_time = time.time()
+    end_time = start_time + 4
+    counter = 4
+    print("Prepare to show rock, paper or scissors in:")
+    while time.time() < end_time:
+        if time.time() == start_time + 1:
+            print(counter - 1)
+            counter -= 1
+            start_time += 1
+    print("Go!")
+
+
+
