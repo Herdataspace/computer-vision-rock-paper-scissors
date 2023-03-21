@@ -46,7 +46,6 @@ def get_prediction():
 def get_computer_choice():
     possible_choices = ['Rock', 'Paper', 'Scissors']
     computer_choice = random.choice(possible_choices)
-    print(f'Computer chose: {computer_choice}')
     return computer_choice
 
 def get_user_choice():
@@ -55,24 +54,43 @@ def get_user_choice():
 
 def get_winner(computer_choice, user_choice):
     if user_choice == computer_choice:
-        print("It is a tie!" )
+        winner = user_choice, computer_choice
+        print(f"The computer also chose: {computer_choice}. It is a tie!" )
     elif computer_choice == "Rock":
         if user_choice == "Paper":
-            print("You won!")
+            winner = user_choice
+            print(f"The computer chose: {computer_choice}. You won!")
         elif user_choice == "Scissors":
-            print("You lost")
+            winner = computer_choice
+            print(f"The computer chose: {computer_choice}. You lost")
+        elif user_choice == "Nothing":
+            winner = computer_choice
+            print('Please choose either Rock, Paper or Scissors.')
     elif computer_choice == "Paper":
         if user_choice == "Scissors":
-            print("You won!")
+            winner = user_choice
+            print(f"The computer chose: {computer_choice}. You won!")
         elif user_choice == "Rock":
-            print("You lost")
+            winner = computer_choice
+            print(f"The computer chose: {computer_choice}. You lost")
+        elif user_choice == "Nothing":
+            winner = computer_choice
+            print('Please choose either Rock, Paper or Scissors.')
     elif computer_choice == "Scissors":
         if user_choice == "Rock":
-            print("You won!")
+            winner = user_choice
+            print(f"The computer chose: {computer_choice}. You won!")
         elif user_choice == "Paper":
-            print("You lost")
+            winner = computer_choice
+            print(f"The computer chose: {computer_choice}. You lost")
+        elif user_choice == "Nothing":
+            winner = computer_choice
+            print('Please choose either Rock, Paper or Scissors.')
+    return winner
 
 def play():
     user_choice = get_user_choice()
     computer_choice = get_computer_choice()
     get_winner(computer_choice, user_choice)
+
+play()
