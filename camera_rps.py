@@ -14,9 +14,10 @@ def get_prediction():
         normalized_image = (image_np.astype(np.float32) / 127.0) - 1 # Normalize the image
         data[0] = normalized_image
         prediction = model.predict(data)
-        choice_prediction = np.argmax(prediction)
+        user_choice_prediction = np.argmax(prediction)
         cv2.imshow('frame', frame)
         # Press q to close the window
+        print(user_choice_prediction)
         print(prediction)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
@@ -25,3 +26,15 @@ def get_prediction():
     cap.release()
     # Destroy all the windows
     cv2.destroyAllWindows()
+
+    if user_choice_prediction == 0:
+        print('Rock')
+    elif user_choice_prediction == 1:
+        print('Paper')
+    elif user_choice_prediction == 2:
+        print('Scissors')
+    else:
+        print('Nothing')
+        
+
+get_prediction()
