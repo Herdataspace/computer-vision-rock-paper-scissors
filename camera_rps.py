@@ -18,11 +18,13 @@ def get_prediction():
         prediction = model.predict(data)
         user_choice_prediction = np.argmax(prediction)
         cv2.imshow('frame', frame)
-        # Press q to close the window
-        print(user_choice_prediction)
+        # print(user_choice_prediction)
         print(prediction)
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
+        countdown()
+        break
+        # Press q to close the window
+        # if cv2.waitKey(1) & 0xFF == ord('q'):
+            # break
 
     # After the loop release the cap object
     cap.release()
@@ -106,5 +108,5 @@ def countdown():
             start_time += 1
     print("Go!")
 
-
+play()
 
