@@ -9,28 +9,34 @@ def get_prediction():
     cap = cv2.VideoCapture(0)
     data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
 
-    while True: 
+    start_time = time.time()
+    timer = 15
+    end_time = start_time + timer
+
+    while time.time() < end_time: 
         ret, frame = cap.read()
         resized_frame = cv2.resize(frame, (224, 224), interpolation = cv2.INTER_AREA)
         image_np = np.array(resized_frame)
         normalized_image = (image_np.astype(np.float32) / 127.0) - 1 # Normalize the image
         data[0] = normalized_image
         prediction = model.predict(data)
+        countdowntext = str(int(start_time + timer - time.time()))
+        preparetext = "Prepare to show rock, paper, or scissors in:"
+        font = cv2.FONT_HERSHEY_SIMPLEX
+        frame = cv2.putText(frame, countdowntext, (800,50), font, 1, (0, 0, 255), 2, cv2.LINE_AA)
+        frame = cv2.putText(frame, preparetext, (50,50), font, 1, (0, 255, 255), 2, cv2.LINE_AA)
         user_choice_prediction = np.argmax(prediction)
         cv2.imshow('frame', frame)
-        # print(user_choice_prediction)
         print(prediction)
-        countdown()
-        break
         # Press q to close the window
-        # if cv2.waitKey(1) & 0xFF == ord('q'):
-            # break
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
 
     # After the loop release the cap object
     cap.release()
     # Destroy all the windows
     cv2.destroyAllWindows()
-
+    
     if user_choice_prediction == 0:
         user_choice = 'Rock'
         print(user_choice)
