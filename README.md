@@ -1,17 +1,16 @@
 # Computer Vision RPS
 
-Rock-Paper-Scissors is a game in which each player simultaneously shows one of three hand signals representing rock, paper, or scissors. 
-Rock beats scissors. Scissors beats paper. Paper beats rock. 
+Rock-Paper-Scissors is a game in which each player simultaneously shows one of three hand signals representing rock, paper, or scissors. <br>
 
-The player who shows the first option that beats the other player's option wins. 
+**Rock beats scissors. Scissors beats paper. Paper beats rock.**  
 
-This is an implementation of an interactive Rock-Paper-Scissors game, in which the user can play with the computer using the camera.
+This is an implementation of an interactive Rock-Paper-Scissors game, created using Python, in which the user can play with the computer using their webcam camera. 
 
 <br>
 
 ## Milestone 1
 
-- Git is a version control system that lets you keep track of your code history. The changes are saved to a remote GitHub repository. A GitHub remote repo is made, which is then cloned locally. 
+Git is a version control system that lets you keep track of your code history. The changes are saved to a remote GitHub repository. A GitHub remote repo is made, which is then cloned locally. 
 
 ```python
 git clone https://github.com/Herdataspace/computer-vision-rock-paper-scissors.git
@@ -21,21 +20,21 @@ git clone https://github.com/Herdataspace/computer-vision-rock-paper-scissors.gi
 
 ## Milestone 2
 
-- A computer-vision system, or model, is created using *'Teachable-Machine'*, which is able to detect whether the user is showing Rock, Paper or Scissors to the camera.  
+A computer-vision system, or model, is created using *'Teachable-Machine'*, which is able to detect whether the user is showing Rock, Paper or Scissors to the camera.  
 
-- An image model is created using four different classes:
-    - Rock
-    - Paper
-    - Scissors
-    - Nothing (represents the lack of option in the image)
+An image model is created using four different classes:
+- Rock
+- Paper
+- Scissors
+- Nothing (represents the lack of option in the image)
 
 <br>
 
-- Each class contains 200 image samples of a user showing the corresponding option. 
+Each class contains 200 image samples of a user showing the corresponding option. 
 
-- The model is then trained, with a batch size of 16 and an epoch of 50 - meaning that the model will work through the entire training dataset 50 times, with 16 samples used for 1 iteration of training. 
+The model is then trained, with a batch size of 16 and an epoch of 50 - meaning that the model will work through the entire training dataset 50 times, with 16 samples used for 1 iteration of training. 
 
-- The accuracy of the model is shown here:
+The accuracy of the model is shown here:
 
     | Class   | Accuracy | # Samples |
     | -----   | -----    | -----     |
@@ -44,9 +43,9 @@ git clone https://github.com/Herdataspace/computer-vision-rock-paper-scissors.gi
     | Scissors| 1.00     | 30        |
     | Nothing | 1.00     | 30        |
 
-- The model is downloaded into *keras_mode.h5*, and a *labels.txt* file which includes the labels. These contain the structure and parameters of the deep-learning model.
+The model is downloaded into *keras_mode.h5*, and a *labels.txt* file which includes the labels. These contain the structure and parameters of the deep-learning model.
 
-- These files are pushed to the remote GitHub repo.
+These files are pushed to the remote GitHub repo.
 
 <br>
 
@@ -104,3 +103,8 @@ To simulate the game, a single function '*play*' calls the other 3 functions
 ![RPS_tie](https://github.com/Herdataspace/computer-vision-rock-paper-scissors/assets/117936304/73391559-38d0-45cc-ab00-1436a70fc0ce)
 
 ![RPS_won](https://github.com/Herdataspace/computer-vision-rock-paper-scissors/assets/117936304/54c0a05d-5ee2-4734-bdc7-56b79715b31d)
+
+<br>
+
+## Milestone 5
+
