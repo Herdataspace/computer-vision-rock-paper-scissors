@@ -13,7 +13,12 @@ def get_prediction():
     timer = 15
     end_time = start_time + timer
 
-    while time.time() < end_time: 
+    while time.time() < end_time:
+        if time.time() == start_time + 1:
+            print(timer- 1)
+            timer -= 1
+            start_time += 1
+            print(int(start_time + timer - time.time()))
         ret, frame = cap.read()
         resized_frame = cv2.resize(frame, (224, 224), interpolation = cv2.INTER_AREA)
         image_np = np.array(resized_frame)
@@ -27,7 +32,7 @@ def get_prediction():
         frame = cv2.putText(frame, preparetext, (50,50), font, 1, (0, 255, 255), 2, cv2.LINE_AA)
         user_choice_prediction = np.argmax(prediction)
         cv2.imshow('frame', frame)
-        print(prediction)
+        
         # Press q to close the window
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
@@ -39,16 +44,16 @@ def get_prediction():
     
     if user_choice_prediction == 0:
         user_choice = 'Rock'
-        print(user_choice)
+        print(f"You chose '{user_choice}'")
     elif user_choice_prediction == 1:
         user_choice = 'Paper'
-        print(user_choice)
+        print(f"You chose '{user_choice}'")
     elif user_choice_prediction == 2:
         user_choice = 'Scissors'
-        print(user_choice)
+        print(f"You chose '{user_choice}'")
     else:
         user_choice = 'Nothing'
-        print(user_choice)
+        print(f"You chose '{user_choice}'")
     
     return user_choice
 
@@ -63,56 +68,64 @@ def get_user_choice():
 
 def get_winner(computer_choice, user_choice):
     if user_choice == computer_choice:
+        global winner 
         winner = user_choice, computer_choice
-        print(f"The computer also chose: {computer_choice}. It is a tie!" )
+        print(f"The computer also chose: {computer_choice}. This round is a tie!" )
     elif computer_choice == "Rock":
         if user_choice == "Paper":
             winner = user_choice
-            print(f"The computer chose: {computer_choice}. You won!")
+            print(f"The computer chose: {computer_choice}. You won this round!")
         elif user_choice == "Scissors":
             winner = computer_choice
-            print(f"The computer chose: {computer_choice}. You lost")
+            print(f"The computer chose: {computer_choice}. You lost this round!")
         elif user_choice == "Nothing":
             winner = computer_choice
             print('Please choose either Rock, Paper or Scissors.')
     elif computer_choice == "Paper":
         if user_choice == "Scissors":
             winner = user_choice
-            print(f"The computer chose: {computer_choice}. You won!")
+            print(f"The computer chose: {computer_choice}. You won this round!")
         elif user_choice == "Rock":
             winner = computer_choice
-            print(f"The computer chose: {computer_choice}. You lost")
+            print(f"The computer chose: {computer_choice}. You lost this round!")
         elif user_choice == "Nothing":
             winner = computer_choice
             print('Please choose either Rock, Paper or Scissors.')
     elif computer_choice == "Scissors":
         if user_choice == "Rock":
             winner = user_choice
-            print(f"The computer chose: {computer_choice}. You won!")
+            print(f"The computer chose: {computer_choice}. You won this round!")
         elif user_choice == "Paper":
             winner = computer_choice
-            print(f"The computer chose: {computer_choice}. You lost")
+            print(f"The computer chose: {computer_choice}. You lost this round!")
         elif user_choice == "Nothing":
             winner = computer_choice
             print('Please choose either Rock, Paper or Scissors.')
     return winner
 
 def play():
-    user_choice = get_user_choice()
-    computer_choice = get_computer_choice()
-    get_winner(computer_choice, user_choice)
+    rounds_played = 1
+    computer_wins = 0
+    user_wins = 0
+    while computer_wins < 3 and user_wins < 3:
+        print(f'Round : {rounds_played}, get ready!')
+        user_choice = get_user_choice()
+        computer_choice = get_computer_choice()
+        get_winner(computer_choice, user_choice)
+        rounds_played += 1
+        if winner == computer_choice:
+            computer_wins += 1
+        elif winner == user_choice:
+            user_wins += 1
+        else:
+            computer_wins += 1
+            user_wins += 1
+    print(f'The final score is: \n computer - {computer_wins} \n user - {user_wins}')
+    if computer_wins > user_wins:
+        print('Better luck next time!')
+    elif computer_wins < user_wins:
+        print('Congratulations! You beat the computer!')
+    else:
+        print("It's a tie!")
 
-def countdown():
-    start_time = time.time()
-    end_time = start_time + 4
-    counter = 4
-    print("Prepare to show rock, paper or scissors in:")
-    while time.time() < end_time:
-        if time.time() == start_time + 1:
-            print(counter - 1)
-            counter -= 1
-            start_time += 1
-    print("Go!")
-
-play()
-
+play()   
