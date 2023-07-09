@@ -78,7 +78,7 @@ def get_user_choice():
 def get_winner(computer_choice, user_choice):
     if user_choice == computer_choice:
         global winner 
-        winner = user_choice, computer_choice
+        winner = None
         print(f"The computer also chose: {computer_choice}. This round is a tie!" )
     elif computer_choice == "Rock":
         if user_choice == "Paper":
@@ -88,7 +88,7 @@ def get_winner(computer_choice, user_choice):
             winner = computer_choice
             print(f"The computer chose: {computer_choice}. You lost this round!")
         elif user_choice == "Nothing":
-            winner = computer_choice
+            winner = None
             print('Please choose either Rock, Paper or Scissors.')
     elif computer_choice == "Paper":
         if user_choice == "Scissors":
@@ -98,7 +98,7 @@ def get_winner(computer_choice, user_choice):
             winner = computer_choice
             print(f"The computer chose: {computer_choice}. You lost this round!")
         elif user_choice == "Nothing":
-            winner = computer_choice
+            winner = None
             print('Please choose either Rock, Paper or Scissors.')
     elif computer_choice == "Scissors":
         if user_choice == "Rock":
@@ -108,7 +108,7 @@ def get_winner(computer_choice, user_choice):
             winner = computer_choice
             print(f"The computer chose: {computer_choice}. You lost this round!")
         elif user_choice == "Nothing":
-            winner = computer_choice
+            winner = None
             print('Please choose either Rock, Paper or Scissors.')
     return winner
 
@@ -128,19 +128,13 @@ def play():
             computer_wins += 1
         elif winner == user_choice:
             user_wins += 1
-        else:
-            computer_wins += 1
-            user_wins += 1
 
-        print(f'The final score is: \n computer - {computer_wins} \n user - {user_wins}')
-        if computer_wins > user_wins:
-            print('Better luck next time!')
-        elif computer_wins < user_wins:
-            print('Congratulations! You beat the computer!')
-        else:
-            print("It's a tie!")
+    print(f'The final score is: \n computer - {computer_wins} \n user - {user_wins}')
+    if computer_wins == 3:
+        print('You lost! Better luck next time!')
+    elif user_wins == 3:
+        print('Congratulations! You beat the computer!')
            
-
 def play_again():
     while True:
         play()
