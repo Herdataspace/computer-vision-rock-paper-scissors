@@ -5,14 +5,17 @@ import numpy as np
 import time
 
 def get_prediction():
+    #Load the model
     model = load_model('keras_model.h5')
     cap = cv2.VideoCapture(0)
     data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
 
+    # Set the timer for the countdown
     start_time = time.time()
     timer = 15
     end_time = start_time + timer
 
+    # Run a capture countdown
     while time.time() < end_time:
         if time.time() == start_time + 1:
             print(timer- 1)
@@ -25,12 +28,16 @@ def get_prediction():
         normalized_image = (image_np.astype(np.float32) / 127.0) - 1 # Normalize the image
         data[0] = normalized_image
         prediction = model.predict(data)
+        #  Create text to be displayed on the image
+        roundtext = f"Round {rounds_played}, get ready!"
         countdowntext = str(int(start_time + timer - time.time()))
-        preparetext = "Prepare to show rock, paper, or scissors in:"
+        preparetext = f"Prepare to show rock, paper, or scissors in:"
         font = cv2.FONT_HERSHEY_SIMPLEX
-        frame = cv2.putText(frame, countdowntext, (800,50), font, 1, (0, 0, 255), 2, cv2.LINE_AA)
-        frame = cv2.putText(frame, preparetext, (50,50), font, 1, (0, 255, 255), 2, cv2.LINE_AA)
+        frame = cv2.putText(frame, roundtext, (50,50), font, 1, (0, 0, 255), 2, cv2.LINE_AA)
+        frame = cv2.putText(frame, countdowntext, (600,400), font, 4, (0, 0, 255), 2, cv2.LINE_AA)
+        frame = cv2.putText(frame, preparetext, (50,100), font, 1, (0, 0, 0), 2, cv2.LINE_AA)
         user_choice_prediction = np.argmax(prediction)
+        # Display the resulting frame
         cv2.imshow('frame', frame)
         
         # Press q to close the window
@@ -39,9 +46,11 @@ def get_prediction():
 
     # After the loop release the cap object
     cap.release()
+
     # Destroy all the windows
-    cv2.destroyAllWindows()
+    # cv2.destroyAllWindows()
     
+    # Determine the user choice from the prediction
     if user_choice_prediction == 0:
         user_choice = 'Rock'
         print(f"You chose '{user_choice}'")
@@ -104,9 +113,11 @@ def get_winner(computer_choice, user_choice):
     return winner
 
 def play():
+    global rounds_played
     rounds_played = 1
     computer_wins = 0
     user_wins = 0
+    # Continue playing until user or computer wins three rounds
     while computer_wins < 3 and user_wins < 3:
         print(f'Round : {rounds_played}, get ready!')
         user_choice = get_user_choice()
@@ -120,12 +131,21 @@ def play():
         else:
             computer_wins += 1
             user_wins += 1
-    print(f'The final score is: \n computer - {computer_wins} \n user - {user_wins}')
-    if computer_wins > user_wins:
-        print('Better luck next time!')
-    elif computer_wins < user_wins:
-        print('Congratulations! You beat the computer!')
-    else:
-        print("It's a tie!")
 
-play()   
+        print(f'The final score is: \n computer - {computer_wins} \n user - {user_wins}')
+        if computer_wins > user_wins:
+            print('Better luck next time!')
+        elif computer_wins < user_wins:
+            print('Congratulations! You beat the computer!')
+        else:
+            print("It's a tie!")
+           
+
+def play_again():
+    while True:
+        play()
+        play_again = input("Play again? (y/n): ")
+        if play_again.lower() != 'y':
+            break
+
+play_again()
