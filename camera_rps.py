@@ -21,7 +21,6 @@ def get_prediction():
             print(timer- 1)
             timer -= 1
             start_time += 1
-            print(int(start_time + timer - time.time()))
         ret, frame = cap.read()
         resized_frame = cv2.resize(frame, (224, 224), interpolation = cv2.INTER_AREA)
         image_np = np.array(resized_frame)
@@ -133,7 +132,7 @@ def play():
     if computer_wins == 3:
         print('You lost! Better luck next time!')
     elif user_wins == 3:
-        print('Congratulations! You beat the computer!')
+        print('Game over! Congratulations, you beat the computer!')
            
 def play_again():
     while True:
