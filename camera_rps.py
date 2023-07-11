@@ -122,7 +122,7 @@ class RPS():
 def play():
     game = RPS()
     # Continue playing until user or computer wins three rounds
-    while game.computer_wins < 3 and game.user_wins < 3:
+    while game.computer_wins < 3 and game.user_wins < 3 and game.rounds_played <6:
         print(f'Round : {game.rounds_played}, get ready!')
         user_choice = game.get_user_choice()
         computer_choice = game.get_computer_choice()
@@ -138,6 +138,8 @@ def play():
         print('You lost! Better luck next time!')
     elif game.user_wins == 3:
         print('Game over! Congratulations, you beat the computer!')
+    else:
+        print('No winners this time!')
 
            
 def play_again():
