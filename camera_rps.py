@@ -37,10 +37,12 @@ class RPS():
             roundtext = f"Round {self.rounds_played}, get ready!"
             countdowntext = str(int(start_time + timer - time.time()))
             preparetext = f"Prepare to show rock, paper, or scissors in:"
+            scoretext = f"User score: {self.user_wins} Computer score: {self.computer_wins}"
             font = cv2.FONT_HERSHEY_SIMPLEX
             frame = cv2.putText(frame, roundtext, (50,50), font, 1, (0, 0, 255), 2, cv2.LINE_AA)
             frame = cv2.putText(frame, countdowntext, (600,400), font, 4, (0, 0, 255), 2, cv2.LINE_AA)
             frame = cv2.putText(frame, preparetext, (50,100), font, 1, (0, 0, 0), 2, cv2.LINE_AA)
+            frame = cv2.putText(frame, scoretext, (50,650), font, 1, (0, 255, 255), 2, cv2.LINE_AA)
             user_choice_prediction = np.argmax(prediction)
             # Display the resulting frame
             cv2.imshow('frame', frame)
