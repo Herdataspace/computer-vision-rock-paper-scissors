@@ -8,7 +8,8 @@ class RPS():
     def __init__(self):
         self.rounds_played = 1
         self.computer_wins = 0
-        self.user_wins = 0      
+        self.user_wins = 0
+        self.winner = None     
       
     def get_prediction(self):
         #Load the model
@@ -23,10 +24,6 @@ class RPS():
 
         # Run a capture countdown
         while time.time() < end_time:
-            if time.time() == start_time + 1:
-                print(timer- 1)
-                timer -= 1
-                start_time += 1
             ret, frame = cap.read()
             resized_frame = cv2.resize(frame, (224, 224), interpolation = cv2.INTER_AREA)
             image_np = np.array(resized_frame)
@@ -37,16 +34,17 @@ class RPS():
             roundtext = f"Round {self.rounds_played}, get ready!"
             countdowntext = str(int(start_time + timer - time.time()))
             preparetext = f"Prepare to show rock, paper, or scissors in:"
-            scoretext = f"User score: {self.user_wins} Computer score: {self.computer_wins}"
+            scoretext = f"Score: user- {self.user_wins} computer- {self.computer_wins}"
             font = cv2.FONT_HERSHEY_SIMPLEX
             frame = cv2.putText(frame, roundtext, (50,50), font, 1, (0, 0, 255), 2, cv2.LINE_AA)
             frame = cv2.putText(frame, countdowntext, (600,400), font, 4, (0, 0, 255), 2, cv2.LINE_AA)
             frame = cv2.putText(frame, preparetext, (50,100), font, 1, (0, 0, 0), 2, cv2.LINE_AA)
-            frame = cv2.putText(frame, scoretext, (50,650), font, 1, (0, 255, 255), 2, cv2.LINE_AA)
+            frame = cv2.putText(frame, scoretext, (50,600), font, 1, (0, 255, 255), 2, cv2.LINE_AA)
             user_choice_prediction = np.argmax(prediction)
+           
             # Display the resulting frame
             cv2.imshow('frame', frame)
-        
+
             # Press q to close the window
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
@@ -84,53 +82,51 @@ class RPS():
 
     def get_winner(self, computer_choice, user_choice):
         if user_choice == computer_choice:
-            global winner 
-            winner = None
             print(f"The computer also chose: {computer_choice}. This round is a tie!" )
         elif computer_choice == "Rock":
             if user_choice == "Paper":
-                winner = user_choice
+                self.winner = user_choice
                 print(f"The computer chose: {computer_choice}. You won this round!")
             elif user_choice == "Scissors":
-                winner = computer_choice
+                self.winner = computer_choice
                 print(f"The computer chose: {computer_choice}. You lost this round!")
             elif user_choice == "Nothing":
-                winner = None
+                self.winner = None
                 print('Please choose either Rock, Paper or Scissors.')
         elif computer_choice == "Paper":
             if user_choice == "Scissors":
-                winner = user_choice
+                self.winner = user_choice
                 print(f"The computer chose: {computer_choice}. You won this round!")
             elif user_choice == "Rock":
-                winner = computer_choice
+                self.winner = computer_choice
                 print(f"The computer chose: {computer_choice}. You lost this round!")
             elif user_choice == "Nothing":
-                winner = None
+                self.winner = None
                 print('Please choose either Rock, Paper or Scissors.')
         elif computer_choice == "Scissors":
             if user_choice == "Rock":
-                winner = user_choice
+                self.winner = user_choice
                 print(f"The computer chose: {computer_choice}. You won this round!")
             elif user_choice == "Paper":
-                winner = computer_choice
+                self.winner = computer_choice
                 print(f"The computer chose: {computer_choice}. You lost this round!")
             elif user_choice == "Nothing":
-                winner = None
+                self.winner = None
                 print('Please choose either Rock, Paper or Scissors.')
-        return winner
+        return self.winner
 
 def play():
     game = RPS()
-    # Continue playing until user or computer wins three rounds
+    # Continue playing until user or computer wins three rounds, or 5 rounds have been played
     while game.computer_wins < 3 and game.user_wins < 3 and game.rounds_played <6:
         print(f'Round : {game.rounds_played}, get ready!')
         user_choice = game.get_user_choice()
         computer_choice = game.get_computer_choice()
         game.get_winner(computer_choice, user_choice)
         game.rounds_played += 1
-        if winner == computer_choice:
+        if game.winner == computer_choice:
             game.computer_wins += 1
-        elif winner == user_choice:
+        elif game.winner == user_choice:
             game.user_wins += 1
 
     print(f'The final score is: \n computer - {game.computer_wins} \n user - {game.user_wins}')
@@ -138,10 +134,7 @@ def play():
         print('You lost! Better luck next time!')
     elif game.user_wins == 3:
         print('Game over! Congratulations, you beat the computer!')
-    else:
-        print('No winners this time!')
-
-           
+ 
 def play_again():
     while True:
         play()
