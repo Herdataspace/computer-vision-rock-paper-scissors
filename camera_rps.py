@@ -56,20 +56,11 @@ class RPS():
         # cv2.destroyAllWindows()
     
         # Determine the user choice from the prediction
-        if user_choice_prediction == 0:
-            user_choice = 'Rock'
-            print(f"You chose '{user_choice}'")
-        elif user_choice_prediction == 1:
-            user_choice = 'Paper'
-            print(f"You chose '{user_choice}'")
-        elif user_choice_prediction == 2:
-            user_choice = 'Scissors'
-            print(f"You chose '{user_choice}'")
-        else:
-            user_choice = 'Nothing'
-            print(f"You chose '{user_choice}'")
-    
-        return user_choice
+
+        choices = ['Rock', 'Paper', 'Scissors', 'Nothing']
+        user_choice = choices[user_choice_prediction]
+        print("You chose '{user_choice}'")
+        return user_choice    
 
     def get_computer_choice(self):
         possible_choices = ['Rock', 'Paper', 'Scissors']
@@ -80,7 +71,7 @@ class RPS():
         user_choice = self.get_prediction()
         return user_choice
 
-    def get_winner(self, computer_choice, user_choice):
+    def get_winner(self, computer_choice, user_choice)
         winning_combinations = {
             'Rock': 'Scissors',
             'Paper': 'Rock',
