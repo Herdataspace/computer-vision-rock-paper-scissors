@@ -34,14 +34,14 @@ class RPS():
             # Press q to close the window
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
-            cap.release()
+        cap.release()
         return frame
       
     def get_prediction(self, frame):
         #Load the model
         model = load_model('keras_model.h5')
         data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
-        resized_frame = cv2.resize(self.frame, (224, 224), interpolation = cv2.INTER_AREA)
+        resized_frame = cv2.resize(frame, (224, 224), interpolation = cv2.INTER_AREA)
         image_np = np.array(resized_frame)
         normalized_image = (image_np.astype(np.float32) / 127.0) - 1 # Normalize the image
         data[0] = normalized_image
@@ -49,7 +49,7 @@ class RPS():
         user_choice_prediction = np.argmax(prediction)
         choices = ['Rock', 'Paper', 'Scissors', 'Nothing']
         user_choice = choices[user_choice_prediction]
-        print("You chose '{user_choice}'")
+        print(f"You chose '{user_choice}'")
         return user_choice    
 
     def get_computer_choice(self):
@@ -87,8 +87,9 @@ def play():
     # Continue playing until user or computer wins three rounds, or 5 rounds have been played
     while game.computer_wins < 3 and game.user_wins < 3 and game.rounds_played <6:
         print(f'Round : {game.rounds_played}, get ready!')
-        user_choice = game.get_user_choice()
-        computer_choice = game.get_computer_choice(frame)
+        frame = game.capture_image()
+        user_choice = game.get_user_choice(frame)
+        computer_choice = game.get_computer_choice()
         winner = game.get_winner(computer_choice, user_choice)
         game.rounds_played += 1
         if winner == computer_choice:
