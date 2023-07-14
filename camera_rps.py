@@ -81,38 +81,25 @@ class RPS():
         return user_choice
 
     def get_winner(self, computer_choice, user_choice):
-        if user_choice == computer_choice:
-            print(f"The computer also chose: {computer_choice}. This round is a tie!" )
-        elif computer_choice == "Rock":
-            if user_choice == "Paper":
-                self.winner = user_choice
-                print(f"The computer chose: {computer_choice}. You won this round!")
-            elif user_choice == "Scissors":
-                self.winner = computer_choice
-                print(f"The computer chose: {computer_choice}. You lost this round!")
-            elif user_choice == "Nothing":
-                self.winner = None
-                print('Please choose either Rock, Paper or Scissors.')
-        elif computer_choice == "Paper":
-            if user_choice == "Scissors":
-                self.winner = user_choice
-                print(f"The computer chose: {computer_choice}. You won this round!")
-            elif user_choice == "Rock":
-                self.winner = computer_choice
-                print(f"The computer chose: {computer_choice}. You lost this round!")
-            elif user_choice == "Nothing":
-                self.winner = None
-                print('Please choose either Rock, Paper or Scissors.')
-        elif computer_choice == "Scissors":
-            if user_choice == "Rock":
-                self.winner = user_choice
-                print(f"The computer chose: {computer_choice}. You won this round!")
-            elif user_choice == "Paper":
-                self.winner = computer_choice
-                print(f"The computer chose: {computer_choice}. You lost this round!")
-            elif user_choice == "Nothing":
-                self.winner = None
-                print('Please choose either Rock, Paper or Scissors.')
+        winning_combinations = {
+            'Rock': 'Scissors',
+            'Paper': 'Rock',
+            'Scissors': 'Paper'
+        }
+
+        if user_choice == 'Nothing':
+            print("Please choose either Rock, Paper or Scissors.")
+            self.winner = None
+        elif user_choice == computer_choice:
+            self.winner = None
+            print(f"The computer also chose: {computer_choice}. This round is a tie!")
+        elif winning_combinations[user_choice] == computer_choice:
+            self.winner = user_choice
+            print(f"The computer chose: {computer_choice}. You won this round!")
+        else:
+            self.winner = computer_choice
+            print(f"The computer chose: {computer_choice}. You lost this round!")
+
         return self.winner
 
 def play():
@@ -122,11 +109,11 @@ def play():
         print(f'Round : {game.rounds_played}, get ready!')
         user_choice = game.get_user_choice()
         computer_choice = game.get_computer_choice()
-        game.get_winner(computer_choice, user_choice)
+        winner = game.get_winner(computer_choice, user_choice)
         game.rounds_played += 1
-        if game.winner == computer_choice:
+        if winner == computer_choice:
             game.computer_wins += 1
-        elif game.winner == user_choice:
+        elif winner == user_choice:
             game.user_wins += 1
 
     print(f'The final score is: \n computer - {game.computer_wins} \n user - {game.user_wins}')
