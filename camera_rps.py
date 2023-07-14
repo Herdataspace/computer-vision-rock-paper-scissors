@@ -116,16 +116,21 @@ def play():
         elif winner == user_choice:
             game.user_wins += 1
 
+    print('\n------------------------------')
+    print('           GAME OVER          ')
+    print('------------------------------\n')
     print(f'The final score is: \n computer - {game.computer_wins} \n user - {game.user_wins}')
     if game.computer_wins == 3:
-        print('You lost! Better luck next time!')
+        print('\nYou lost! Better luck next time!')
     elif game.user_wins == 3:
-        print('Game over! Congratulations, you beat the computer!')
+        print('\nCongratulations, you beat the computer!')
+    else:
+        print('\nTry again to get 3 victories!')
  
 def play_again():
     while True:
         play()
-        play_again = input("Play again? (y/n): ")
+        play_again = input("\nPlay again? (y/n): ")
         if play_again.lower() != 'y':
             break
 
