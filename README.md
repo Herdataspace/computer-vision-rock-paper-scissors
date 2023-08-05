@@ -6,9 +6,11 @@ Rock-Paper-Scissors is a game in which each player simultaneously shows one of t
 
 This is an implementation of an interactive Rock-Paper-Scissors game, created using Python, in which the user can play with the computer using their webcam camera. 
 
+Project completed as part of my training with <a href="https://www.theaicore.com/">**AiCORE**</a>. 
+
 <br>
 
-## Milestone 1
+## Milestone 1 : Set up the environment
 
 Git is a version control system that lets you keep track of your code history. The changes are saved to a remote GitHub repository. A GitHub remote repo is made, which is then cloned locally. 
 
@@ -18,7 +20,7 @@ git clone https://github.com/Herdataspace/computer-vision-rock-paper-scissors.gi
 
 <br>
 
-## Milestone 2
+## Milestone 2 : Create the computer vision system
 
 A computer-vision system, or model, is created using *'Teachable-Machine'*, which is able to detect whether the user is showing Rock, Paper or Scissors to the camera.  
 
@@ -49,7 +51,7 @@ These files are pushed to the remote GitHub repo.
 
 <br>
 
-## Milestone 3
+## Milestone 3 : Install the dependencies
 
 A new virtual environment is made, and pip is used to install the dependencies for the project inc.: *opencv-python*, *tensorflow*, and *ipykernel*
 
@@ -61,7 +63,7 @@ pip install tensorflow
 
 <br>
 
-## Milestone 4
+## Milestone 4 : Create the game
 
 The Rock-Paper-Scissors games is coded in Python manually. <br>
 The code asks the user for an input, then compares the user input with the computer choice's to show a winner.<br>
@@ -106,5 +108,61 @@ To simulate the game, a single function '*play*' calls the other 3 functions
 
 <br>
 
-## Milestone 5
+## Milestone 5 : Use the camera to play Rock-Paper-Scissors
+
+OpenCV is an open-source library that includes hundreds of computer vision algorithms. It is used in this project to capture an image of the user and determine their hand signal of choice - Rock/Paper/Scissors/Nothing. <br>
+
+This output replaces the previously hard-coded user input. <br>
+
+When the user shows a hand gesture to the camera, the model creates a numpy array of probabilities for each class. 
+The model was trained in the order 'Rock', 'Paper', 'Scissors', and  'Nothing'. 
+**'argmax'** returns the index of the class with the highest probability, which can then be used to determine the users hand signal.  <br>
+
+The new code is stored in the *camera_rps.py* file. <br>
+<br>
+
+**Countdown**
+
+A countdown timer is added to the webcam image, to indicate when the user should show their desired hand signal. 
+
+The *time.time()* function is used to capture start and end times for the countdown. 
+A while loop is then used to get how much time has passed since the script started:
+
+```python
+start_time = time.time()
+timer = 15
+end_time = start_time + timer
+
+while time.time() < end_time:
+```
+```python
+ if time.time() == start_time + 1:
+            print(timer- 1)
+            timer -= 1
+            start_time += 1
+            print(int(start_time + timer - time.time()))
+```
+
+![Screen Shot 2023-06-14 at 19 23 20](https://github.com/Herdataspace/computer-vision-rock-paper-scissors/assets/117936304/f067b324-089f-41a1-a9b3-5e11b13138d6)
+
+<br>
+
+**Continue playing until 3 victories**
+
+The code is ammended to allow the game to continue until the player or computer wins three rounds, or 5 rounds have been played. 
+
+*rounds_played*, *computer_wins* and *user_wins* are variables created to keep score of wins and rounds. <br>
+A while loop is created to allow the game to continue until the user or computer wins 3 rounds. <br>
+The game then prints the final score and determines the overall winner. 
+
+**Play again?**
+
+A new function is created to ask the user, at the end of the game, if they want to play again.
+
+**Taking it further...**
+
+To improve the readability of the code, the functions are put into the class 'RPS', and the code is separated into smaller functions. An instance of the class is then called in the play function. 
+
+Further text is added to the frame to improve the user experience!
+
 
