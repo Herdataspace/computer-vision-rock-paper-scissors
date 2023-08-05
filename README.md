@@ -143,7 +143,7 @@ while time.time() < end_time:
             print(int(start_time + timer - time.time()))
 ```
 
-![Screen Shot 2023-06-14 at 19 23 20](https://github.com/Herdataspace/computer-vision-rock-paper-scissors/assets/117936304/f067b324-089f-41a1-a9b3-5e11b13138d6)
+![Timer frame](https://github.com/Herdataspace/computer-vision-rock-paper-scissors/assets/117936304/f067b324-089f-41a1-a9b3-5e11b13138d6)
 
 <br>
 
@@ -163,6 +163,11 @@ A new function is created to ask the user, at the end of the game, if they want 
 
 To improve the readability of the code, the functions are put into the class 'RPS', and the code is separated into smaller functions. An instance of the class is then called in the play function. 
 
+![RPS class](https://github.com/Herdataspace/computer-vision-rock-paper-scissors/assets/117936304/2a0b6d7c-0029-40dd-bb3e-9951d7a62603)
+
+![Initialising class](https://github.com/Herdataspace/computer-vision-rock-paper-scissors/assets/117936304/b654c36c-d2fe-45b1-8a35-9bd28f82b8d2)
+
 Further text is added to the frame to improve the user experience!
 
+![RPS game over](https://github.com/Herdataspace/computer-vision-rock-paper-scissors/assets/117936304/0b1c7522-cd98-472c-8e3f-86af6d277b4e)
 
