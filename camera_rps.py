@@ -28,7 +28,7 @@ class RPS():
             frame = cv2.putText(frame, roundtext, (50,50), font, 1, (0, 0, 255), 2, cv2.LINE_AA)
             frame = cv2.putText(frame, countdowntext, (600,400), font, 4, (0, 0, 255), 2, cv2.LINE_AA)
             frame = cv2.putText(frame, preparetext, (50,100), font, 1, (0, 0, 0), 2, cv2.LINE_AA)
-            frame = cv2.putText(frame, scoretext, (50,600), font, 1, (0, 255, 255), 2, cv2.LINE_AA)
+            frame = cv2.putText(frame, scoretext, (50,600), font, 1, (0, 0, 0), 2, cv2.LINE_AA)
             # Display the resulting frame
             cv2.imshow('frame', frame)
             # Press q to close the window
@@ -46,6 +46,7 @@ class RPS():
         normalized_image = (image_np.astype(np.float32) / 127.0) - 1 # Normalize the image
         data[0] = normalized_image
         prediction = model.predict(data)
+        # determine user choice from model
         user_choice_prediction = np.argmax(prediction)
         choices = ['Rock', 'Paper', 'Scissors', 'Nothing']
         user_choice = choices[user_choice_prediction]
@@ -84,11 +85,13 @@ class RPS():
 
 def play():
     game = RPS()
-    # Continue playing until user or computer wins three rounds, or 5 rounds have been played
-    while game.computer_wins < 3 and game.user_wins < 3 and game.rounds_played <6:
-        print(f'Round : {game.rounds_played}, get ready!')
-        frame = game.capture_image()
-        user_choice = game.get_user_choice(frame)
+    captured_frame = None
+    # Continue playing until the user or computer wins three rounds or 5 rounds have been played
+    while game.computer_wins < 3 and game.user_wins < 3 and game.rounds_played < 6:
+        print(f'Round: {game.rounds_played}, get ready!')
+        frame = game.capture_image()  # Capture the image
+        captured_frame = frame  # Store the captured frame
+        user_choice = game.get_user_choice(frame)  # Pass the captured frame
         computer_choice = game.get_computer_choice()
         winner = game.get_winner(computer_choice, user_choice)
         game.rounds_played += 1
@@ -96,17 +99,30 @@ def play():
             game.computer_wins += 1
         elif winner == user_choice:
             game.user_wins += 1
+    
+    win_text = 'Congratulations, you beat the computer!'
+    loser_text = 'You lost! Better luck next time!'
+    no_winner_text = 'Try again to get 3 victories!'
 
     print('\n------------------------------')
     print('           GAME OVER          ')
     print('------------------------------\n')
     print(f'The final score is: \n computer - {game.computer_wins} \n user - {game.user_wins}')
     if game.computer_wins == 3:
-        print('\nYou lost! Better luck next time!')
+        print(loser_text) 
     elif game.user_wins == 3:
-        print('\nCongratulations, you beat the computer!')
+        print(win_text)
     else:
-        print('\nTry again to get 3 victories!')
+        print(no_winner_text)
+
+    # Display game over message on the final captured frame
+    game_over_text = "GAME OVER" 
+    font = cv2.FONT_HERSHEY_SIMPLEX
+    captured_frame = cv2.putText(captured_frame, game_over_text, (250, 400), font, 4, (0, 255, 0), 2, cv2.LINE_AA)
+    cv2.imshow('frame', captured_frame)
+    cv2.waitKey(0)
+
+    cv2.destroyAllWindows()
  
 def play_again():
     while True:
